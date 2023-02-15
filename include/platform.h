@@ -51,7 +51,6 @@
  *
  */
 
-
 /** @defgroup  Platform_standard_data_types  Standard Data Types */
 /*@{*/
 /**
@@ -62,41 +61,41 @@
  */
 #include <stdint.h>
 #define EXAMPLE_VARIABLE uint32_t
-/*@}*/  /* defgroup */
+/*@}*/ /* defgroup */
 
 /** @defgroup  Platform_memory_section  Linker Memory Sections */
 /*@{*/
 /**
-  * @brief  Memory Sections. You need to place these in your application linker map.
-  *
-  *			Section name: PLATFORM_LIB_SECTION
-  *
-  *			All of the static information used within the platform library is stored
-  *			within this section.
-  */
- #define PLATFORM_LIB_SECTION "This section defines the memory section for the platform library"
-/*@}*/  /* defgroup */
+ * @brief  Memory Sections. You need to place these in your application linker map.
+ *
+ *			Section name: PLATFORM_LIB_SECTION
+ *
+ *			All of the static information used within the platform library is stored
+ *			within this section.
+ */
+#define PLATFORM_LIB_SECTION "This section defines the memory section for the platform library"
+/*@}*/ /* defgroup */
 
 /** @defgroup  Platform_cache Platform Cache */
 /*@{*/
 /**
-  * @brief  The following definitions are for handling cache alignment on the platform.
-  *
-  * 		MAX_CACHE_LINE must be set to the cache line size of the platform.
-  *
-  * 		When allocating memory that must be cache aligned, it must be a multiple of
-  * 		the cache line size. Use platform_roundup to get the appropriate size.
-  *
-  * 		As an example to allocate a cache aligned block of memory you would do
-  * 		something like:
-  *
-  * 			buffer_len_aligned = platform_roundup (buffer_len, MAX_CACHE_LINE)
-  * 			Malloc (buffer_len_aligned)
-  *
-  */
+ * @brief  The following definitions are for handling cache alignment on the platform.
+ *
+ * 		MAX_CACHE_LINE must be set to the cache line size of the platform.
+ *
+ * 		When allocating memory that must be cache aligned, it must be a multiple of
+ * 		the cache line size. Use platform_roundup to get the appropriate size.
+ *
+ * 		As an example to allocate a cache aligned block of memory you would do
+ * 		something like:
+ *
+ * 			buffer_len_aligned = platform_roundup (buffer_len, MAX_CACHE_LINE)
+ * 			Malloc (buffer_len_aligned)
+ *
+ */
 /* w should be power of 2 */
 #define PLATFORM_CACHE_LINE_SIZE (128)
-#define platform_roundup(n,w) (((n) + (w) - 1) & ~((w) - 1))
+#define platform_roundup(n, w) (((n) + (w)-1) & ~((w)-1))
 
 /**
  *   @n@b Convert_CoreLocal2GlobalAddr
@@ -109,19 +108,18 @@
  *   @return    uint32_t >0  Global L2 address
  *
  */
-uint32_t Convert_CoreLocal2GlobalAddr (uint32_t  addr);
+uint32_t Convert_CoreLocal2GlobalAddr(uint32_t addr);
 
-
-/*@}*/  /* defgroup */
+/*@}*/ /* defgroup */
 
 /** @defgroup  Compilation_Flags Compilation Flags */
 /*@{*/
 /***
-  * @brief  Flags for compiling the library.
-  *
-  * 		The file paltform_internal.h has compilation flags that can be set.
-  */
-/*@}*/  /* defgroup */
+ * @brief  Flags for compiling the library.
+ *
+ * 		The file paltform_internal.h has compilation flags that can be set.
+ */
+/*@}*/ /* defgroup */
 
 /** @defgroup  Platform_common  Common */
 /*@{*/
@@ -131,18 +129,18 @@ uint32_t Convert_CoreLocal2GlobalAddr (uint32_t  addr);
  * while positive values indicate success.
  */
 
-#define Platform_STATUS        int32_t /** Platform API return type */
+#define Platform_STATUS int32_t /** Platform API return type */
 
-#define Platform_EINVALID     -3   /**< Error code for invalid parameters */
-#define Platform_EUNSUPPORTED -2   /**< Error code for unsupported feature */
-#define Platform_EFAIL        -1   /**< General failure code */
-#define Platform_EOK           0   /**< General success code */
+#define Platform_EINVALID -3 /**< Error code for invalid parameters */
+#define Platform_EUNSUPPORTED -2 /**< Error code for unsupported feature */
+#define Platform_EFAIL -1 /**< General failure code */
+#define Platform_EOK 0 /**< General success code */
 
 /* Set the endianess for the platform */
 #define PLATFORM_LE 1
 #define PLATFORM_BE 0
 
-#define PLATFORM_MAX_EMAC_PORT_NUM       2   /**< Maximum number of EMAC ports */
+#define PLATFORM_MAX_EMAC_PORT_NUM 2 /**< Maximum number of EMAC ports */
 
 /**
  *  @brief This structure contains multicore processor information, e.g. # of the core, processor name, etc.
@@ -180,7 +178,6 @@ typedef struct {
     /**<EEPROM EMAC address */ /* August 15, 2011 - this field is deprecated, MAC address is now defined in the new data structure PLATFORM_EMAC_EXT_info */
 } EMAC_info;
 
-
 /**
  * @brief Indicates the EMAC port mode
  *
@@ -196,19 +193,17 @@ typedef enum {
     /**<End of port mode */
 } PLATFORM_EMAC_PORT_MODE;
 
-
 /**
  *  @brief This structure contains extended information about the EMAC, e.g. port #, port mode, port MAC addess, etc.
  */
 typedef struct {
-    uint32_t                        port_num;
+    uint32_t port_num;
     /**<Port number of the EMAC port */
-    PLATFORM_EMAC_PORT_MODE         mode;
+    PLATFORM_EMAC_PORT_MODE mode;
     /**<Mode of the EMAC port */
-    uint8_t                         mac_address[6];
+    uint8_t mac_address[6];
     /**<MAC address of the EMAC port */
 } PLATFORM_EMAC_EXT_info;
-
 
 /** @brief LED Classes */
 
@@ -257,7 +252,7 @@ typedef struct {
     /**<Serial number for the unit as read from the I2C */
     uint16_t board_rev;
     /**<Revision number of the board, as read from the H/W*/
-	uint32_t frequency;
+    uint32_t frequency;
     /**<CPU frequency (MHz)*/
     /**<Peripheral information */
     EMAC_info emac;
@@ -265,7 +260,6 @@ typedef struct {
     LED_info led[PLATFORM_END_LED_CLASS];
     /**<LED information*/
 } platform_info;
-
 
 /**
  *  @brief      Get platform information.
@@ -275,7 +269,7 @@ typedef struct {
  *
  */
 
-void platform_get_info(platform_info * p_info);
+void platform_get_info(platform_info* p_info);
 
 /**
  *  @brief This structure contains peripherals to be initialized. It provides for basic board initialization.
@@ -298,7 +292,6 @@ typedef struct {
     /**<1: initialize memory ECC checks. If 0, they are not disabled but the default power on state is disabled. */
 } platform_init_flags;
 
-
 /**
  *  @brief This structure contains initialization parameters
  */
@@ -314,7 +307,7 @@ typedef struct {
     /**<Platform pll postdivider (0 to set the default value)*/
     uint16_t mastercore;
     /** Designates this core as the Master. Default is Core 0 */
- } platform_init_config;
+} platform_init_config;
 
 /**
  *  @brief     Plarform initialization
@@ -330,8 +323,7 @@ typedef struct {
  *
  */
 
-Platform_STATUS platform_init(platform_init_flags * p_flags, platform_init_config * p_config);
-
+Platform_STATUS platform_init(platform_init_flags* p_flags, platform_init_config* p_config);
 
 /**
  *  @brief     Test external (DDR) memory region
@@ -361,8 +353,6 @@ Platform_STATUS platform_external_memory_test(uint32_t start_address, uint32_t e
 
 Platform_STATUS platform_internal_memory_test(uint32_t id);
 
-
-
 /**
  *  @brief     Plarform get core_id
  *
@@ -383,7 +373,7 @@ uint32_t platform_get_coreid(void);
 
 uint32_t platform_get_switch_state(uint32_t id);
 
-/*@}*/  /* defgroup */
+/*@}*/ /* defgroup */
 
 /** @defgroup    EMAC_PHY_support_functions  EMAC */
 /*@{*/
@@ -413,7 +403,7 @@ typedef enum {
  *
  */
 
-Platform_STATUS platform_get_macaddr(PLATFORM_MAC_TYPE type, uint8_t * mac_address);
+Platform_STATUS platform_get_macaddr(PLATFORM_MAC_TYPE type, uint8_t* mac_address);
 
 /**
  *  @brief     Plarform get information of an EMAC port
@@ -426,7 +416,7 @@ Platform_STATUS platform_get_macaddr(PLATFORM_MAC_TYPE type, uint8_t * mac_addre
  *
  */
 
-Platform_STATUS platform_get_emac_info(uint32_t port_num, PLATFORM_EMAC_EXT_info * emac_info);
+Platform_STATUS platform_get_emac_info(uint32_t port_num, PLATFORM_EMAC_EXT_info* emac_info);
 
 /**
  *  @brief     Get PHY address for a port number
@@ -455,7 +445,7 @@ int32_t platform_get_phy_addr(uint32_t port_num);
 
 Platform_STATUS platform_phy_link_status(uint32_t port_num);
 
-/*@}*/  /* defgroup */
+/*@}*/ /* defgroup */
 
 /** @defgroup    Memory_device_support_functions  Memory Devices (e.g. Flash) */
 /*@{*/
@@ -551,10 +541,10 @@ Platform_STATUS platform_phy_link_status(uint32_t port_num);
  * 			memory device.
  *
  */
-#define    PLATFORM_DEVID_NAND512R3A2D      0x2036		/**< NAND Flash */
-#define    PLATFORM_DEVID_NORN25Q128        0xBB18		/**< NOR Flash */
-#define    PLATFORM_DEVID_EEPROM50   		0x50		/**< EEPROM @ slave address 0x50  */
-#define    PLATFORM_DEVID_EEPROM51   		0x51		/**< EEPROM @ slave address 0x51  */
+#define PLATFORM_DEVID_NAND512R3A2D 0x2036 /**< NAND Flash */
+#define PLATFORM_DEVID_NORN25Q128 0xBB18 /**< NOR Flash */
+#define PLATFORM_DEVID_EEPROM50 0x50 /**< EEPROM @ slave address 0x50  */
+#define PLATFORM_DEVID_EEPROM51 0x51 /**< EEPROM @ slave address 0x51  */
 
 /**
  * @brief Indicates the type of device
@@ -587,20 +577,20 @@ typedef uint32_t PLATFORM_DEVHANDLE;
  *			value will be NULL. The number of blocks in the bblist is determined by the block_count field.
  */
 typedef struct {
-    int32_t manufacturer_id;		/**<manufacturer ID*/
-    int32_t device_id;				/**<Manufacturers device ID*/
-    PLATFORM_DEVICE_TYPE  type;		/**<Type of device */
-    int32_t width;					/**<Width in bits*/
-    int32_t block_count;			/**<Total blocks. First block starts at 0. */
-    int32_t page_count;				/**<Page count per block*/
-    int32_t page_size;				/**<Number of bytes in a page including spare area*/
-    int32_t spare_size;				/**<Spare area size in bytes*/
-    PLATFORM_DEVHANDLE handle;		/**<Handle to the block device as returned by Open. Handle is Opaque, do not interpret or modify */
-    int32_t	bboffset;				/**<Offset into spare area to check for a bad block */
-	uint32_t column;				/**<Column for a NAND device */
-	uint32_t flags;					/**<Flags is a copy of the flags that were used to open the device */
-	void	*internal;				/**<Do not use. Used internally by the platform library */
-    uint8_t *bblist;				/** <Bad Block list or NULL if device does not support one  */
+    int32_t manufacturer_id; /**<manufacturer ID*/
+    int32_t device_id; /**<Manufacturers device ID*/
+    PLATFORM_DEVICE_TYPE type; /**<Type of device */
+    int32_t width; /**<Width in bits*/
+    int32_t block_count; /**<Total blocks. First block starts at 0. */
+    int32_t page_count; /**<Page count per block*/
+    int32_t page_size; /**<Number of bytes in a page including spare area*/
+    int32_t spare_size; /**<Spare area size in bytes*/
+    PLATFORM_DEVHANDLE handle; /**<Handle to the block device as returned by Open. Handle is Opaque, do not interpret or modify */
+    int32_t bboffset; /**<Offset into spare area to check for a bad block */
+    uint32_t column; /**<Column for a NAND device */
+    uint32_t flags; /**<Flags is a copy of the flags that were used to open the device */
+    void* internal; /**<Do not use. Used internally by the platform library */
+    uint8_t* bblist; /** <Bad Block list or NULL if device does not support one  */
 } PLATFORM_DEVICE_info;
 
 /**
@@ -623,7 +613,7 @@ typedef struct {
  * 				 Flag Usage: (Currently none defined, use 0)
  */
 
-PLATFORM_DEVICE_info *platform_device_open(uint32_t deviceid, uint32_t flags);
+PLATFORM_DEVICE_info* platform_device_open(uint32_t deviceid, uint32_t flags);
 
 /**
  *  @brief       Closes the device
@@ -634,8 +624,7 @@ PLATFORM_DEVICE_info *platform_device_open(uint32_t deviceid, uint32_t flags);
  *
  */
 
-Platform_STATUS platform_device_close (PLATFORM_DEVHANDLE handle);
-
+Platform_STATUS platform_device_close(PLATFORM_DEVHANDLE handle);
 
 /**
  *  @brief      Write the data to the device
@@ -654,10 +643,10 @@ Platform_STATUS platform_device_close (PLATFORM_DEVHANDLE handle);
  *
  *
  */
-Platform_STATUS platform_device_write(PLATFORM_DEVHANDLE 	handle,
-									 uint32_t 	offset,
-                                     uint8_t 	*buf,
-                                     uint32_t	len);
+Platform_STATUS platform_device_write(PLATFORM_DEVHANDLE handle,
+    uint32_t offset,
+    uint8_t* buf,
+    uint32_t len);
 
 /**
  *  @brief      Convert the block and page number to offset
@@ -674,11 +663,10 @@ Platform_STATUS platform_device_write(PLATFORM_DEVHANDLE 	handle,
  *
  *
  */
-Platform_STATUS platform_blocknpage_to_offset(PLATFORM_DEVHANDLE 	handle,
-									 uint32_t 	*offset,
-                                     uint32_t 	block,
-                                     uint32_t	page);
-
+Platform_STATUS platform_blocknpage_to_offset(PLATFORM_DEVHANDLE handle,
+    uint32_t* offset,
+    uint32_t block,
+    uint32_t page);
 
 /**
  *  @brief      Convert the offset to block and page number
@@ -696,9 +684,9 @@ Platform_STATUS platform_blocknpage_to_offset(PLATFORM_DEVHANDLE 	handle,
  *
  */
 Platform_STATUS platform_offset_to_blocknpage(PLATFORM_DEVHANDLE handle,
-									 uint32_t 	offset,
-                                     uint32_t 	*block,
-                                     uint32_t	*page);
+    uint32_t offset,
+    uint32_t* block,
+    uint32_t* page);
 
 /**
  *  @brief       Reads a page from the device
@@ -723,11 +711,10 @@ Platform_STATUS platform_offset_to_blocknpage(PLATFORM_DEVHANDLE handle,
  *               PLATFORM_ERRNO_ECC_FAIL
  */
 
-
-Platform_STATUS platform_device_read(PLATFORM_DEVHANDLE 	handle,
-									 uint32_t 	offset,
-                                     uint8_t 	*buf,
-                                     uint32_t	len);
+Platform_STATUS platform_device_read(PLATFORM_DEVHANDLE handle,
+    uint32_t offset,
+    uint8_t* buf,
+    uint32_t len);
 
 /**
  *  @brief       Reads spare data from the flash device
@@ -746,10 +733,9 @@ Platform_STATUS platform_device_read(PLATFORM_DEVHANDLE 	handle,
  */
 
 Platform_STATUS platform_device_read_spare_data(PLATFORM_DEVHANDLE handle,
-												uint32_t block_number,
-												uint32_t page_number,
-												uint8_t *buf);
-
+    uint32_t block_number,
+    uint32_t page_number,
+    uint8_t* buf);
 
 /**
  *  @brief       Marks the block bad
@@ -761,16 +747,16 @@ Platform_STATUS platform_device_read_spare_data(PLATFORM_DEVHANDLE handle,
  *
  *  @retval      Platform_EOK on Success
  *
- *  @remark      This API can be specifically used to mark a block to be bad 
- *               when there is read error due to the ECC failure. 
+ *  @remark      This API can be specifically used to mark a block to be bad
+ *               when there is read error due to the ECC failure.
  *               The bad block mark byte is indexed by the bboffset. The application should
  *               only overwirte the bad block mark byte in the spare area
  *               data when marking a block bad.
  *
  */
 
-Platform_STATUS platform_device_mark_block_bad (PLATFORM_DEVHANDLE handle,
-                                                uint32_t block_number);
+Platform_STATUS platform_device_mark_block_bad(PLATFORM_DEVHANDLE handle,
+    uint32_t block_number);
 
 /**
  *  @brief       Writes spare data to the flash device
@@ -799,9 +785,9 @@ Platform_STATUS platform_device_mark_block_bad (PLATFORM_DEVHANDLE handle,
  */
 
 Platform_STATUS platform_device_write_spare_data(PLATFORM_DEVHANDLE handle,
-                                                uint32_t block_number,
-												uint32_t page_number,
-												uint8_t *buf);
+    uint32_t block_number,
+    uint32_t page_number,
+    uint8_t* buf);
 
 /**
  *  @brief       erase a block on the flash block
@@ -815,14 +801,12 @@ Platform_STATUS platform_device_write_spare_data(PLATFORM_DEVHANDLE handle,
  */
 
 Platform_STATUS platform_device_erase_block(PLATFORM_DEVHANDLE handle,
-                                            uint32_t block_number);
+    uint32_t block_number);
 
-
-/*@}*/  /* defgroup */
+/*@}*/ /* defgroup */
 
 /** @defgroup    UART_functions  UART */
 /*@{*/
-
 
 /**
  *  @brief      Initialize the UART.
@@ -835,7 +819,6 @@ Platform_STATUS platform_device_erase_block(PLATFORM_DEVHANDLE handle,
  */
 
 Platform_STATUS platform_uart_init(void);
-
 
 /**
  *  @brief      Set the baud rate for the UART
@@ -861,7 +844,7 @@ Platform_STATUS platform_uart_set_baudrate(uint32_t baudrate);
  *
  */
 
-Platform_STATUS platform_uart_read(uint8_t *buf, uint32_t delay);
+Platform_STATUS platform_uart_read(uint8_t* buf, uint32_t delay);
 
 /**
  *  @brief      Write a character to the UART
@@ -899,17 +882,17 @@ Platform_STATUS platform_uart_write(uint8_t chr);
  *
  *				 This call is not intended to be used for serious debugging.
  *				 Its purpose is light duty writing of messages. It should not
- *               be called from an interrupt context as it uses printf when 
+ *               be called from an interrupt context as it uses printf when
  *				 writing to the console. The following wiki articles are good
  *               write ups on printf vs. system_printf vs. real time tracing
  *				  http://processors.wiki.ti.com/index.php/Printf_support_in_compiler
- *				  http://processors.wiki.ti.com/index.php/Tips_for_using_printf 
+ *				  http://processors.wiki.ti.com/index.php/Tips_for_using_printf
  */
 
-void platform_write(const char *fmt, ...);
-WRITE_info platform_write_configure (WRITE_info write_type);
+void platform_write(const char* fmt, ...);
+WRITE_info platform_write_configure(WRITE_info write_type);
 
-/*@}*/  /* defgroup */
+/*@}*/ /* defgroup */
 
 /**
  * ============================================================================
@@ -926,7 +909,7 @@ WRITE_info platform_write_configure (WRITE_info write_type);
  *  @remark      Please refer to the specific EVM technical reference manual for a full list of FPGA register offset address.
  *  @verbatim
             uint8_t uchValue = 0;
-    		uint8_t uchAdd   = (0x08);
+                uint8_t uchAdd   = (0x08);
 
             ret = platform_fpgaWriteConfigReg(uchAdd, uchValue);
 
@@ -934,7 +917,6 @@ WRITE_info platform_write_configure (WRITE_info write_type);
  * =============================================================================
  */
 uint32_t platform_fpgaWriteConfigReg(uint8_t uchAddress, uint8_t uchValue);
-
 
 /**
  * ============================================================================
@@ -951,30 +933,27 @@ uint32_t platform_fpgaWriteConfigReg(uint8_t uchAddress, uint8_t uchValue);
  *  @remark      Please refer to the specific EVM technical reference manual for a full list of FPGA register offset address.
  *  @verbatim
             uint8_t uchValue = 0;
-    		uint8_t uchAdd   = (0x08);
+                uint8_t uchAdd   = (0x08);
 
             ret = platform_fpgaReadConfigReg(uchAdd, &uchValue);
  *  @return      None
  * =============================================================================
  */
-uint32_t platform_fpgaReadConfigReg(uint8_t uchAddress, uint8_t *puchValue);
-
-
-
+uint32_t platform_fpgaReadConfigReg(uint8_t uchAddress, uint8_t* puchValue);
 
 /** @defgroup    Utility_functions  Utility Functions */
 /*@{*/
 
 /** LED operation
-*/
+ */
 typedef enum {
 
     /** Turn off LED
-    */
+     */
     PLATFORM_LED_OFF = 0,
 
     /** Turn on LED
-    */
+     */
     PLATFORM_LED_ON = 1
 
 } PLATFORM_LED_OP;
@@ -1019,11 +998,11 @@ Platform_STATUS platform_delay(uint32_t usecs);
 
 void platform_delaycycles(uint32_t cycles);
 
-/*@}*/  /* defgroup */
+/*@}*/ /* defgroup */
 
-/** @defgroup    OSAL_functions  OSAL Functions 
-* These routines are called from Platform Library and must be implemented by the Application.
-*/
+/** @defgroup    OSAL_functions  OSAL Functions
+ * These routines are called from Platform Library and must be implemented by the Application.
+ */
 /*@{*/
 
 /**
@@ -1043,8 +1022,7 @@ void platform_delaycycles(uint32_t cycles);
  *      Allocated block address
  * =============================================================================
  */
-uint8_t *Osal_platformMalloc (uint32_t num_bytes, uint32_t alignment);
-
+uint8_t* Osal_platformMalloc(uint32_t num_bytes, uint32_t alignment);
 
 /**
  * ============================================================================
@@ -1067,7 +1045,7 @@ uint8_t *Osal_platformMalloc (uint32_t num_bytes, uint32_t alignment);
  *      Not Applicable
  * =============================================================================
  */
-void Osal_platformFree (uint8_t *dataPtr, uint32_t num_bytes);
+void Osal_platformFree(uint8_t* dataPtr, uint32_t num_bytes);
 
 /**
  * ============================================================================
@@ -1086,7 +1064,6 @@ void Osal_platformFree (uint8_t *dataPtr, uint32_t num_bytes);
  */
 void Osal_platformSpiCsEnter(void);
 
-
 /**
  * ============================================================================
  *  @n@b Osal_platformSpiCsExit
@@ -1101,11 +1078,9 @@ void Osal_platformSpiCsEnter(void);
  *  @return     None
  * =============================================================================
  */
-void Osal_platformSpiCsExit (void);
+void Osal_platformSpiCsExit(void);
 
-
-
-/*@}*/  /* defgroup */
+/*@}*/ /* defgroup */
 
 /** @defgroup    Error_handling  Error Handling (Errno values) */
 /*@{*/
@@ -1121,52 +1096,52 @@ extern uint32_t platform_errno;
 
 /** Platform errno values */
 
-#define PLATFORM_ERRNO_RESET            0				/**< No error */
+#define PLATFORM_ERRNO_RESET 0 /**< No error */
 
-#define PLATFORM_ERRNO_GENERIC          0x00000001
-#define PLATFORM_ERRNO_INVALID_ARGUMENT 0x00000002		/**< NULL pointer, argument out of range, etc									*/
+#define PLATFORM_ERRNO_GENERIC 0x00000001
+#define PLATFORM_ERRNO_INVALID_ARGUMENT 0x00000002 /**< NULL pointer, argument out of range, etc									*/
 
-#define PLATFORM_ERRNO_PLL_SETUP        0x00000003		/**< Error initializing	*/
-#define PLATFORM_ERRNO_EEPROM           0x00000004		/**< Error initializing	*/
-#define PLATFORM_ERRNO_UART             0x00000005		/**< Error initializing	*/
-#define PLATFORM_ERRNO_LED              0x00000006		/**<  Error initializing	*/
-#define PLATFORM_ERRNO_I2C              0x00000007		/**<  Error initializing	*/
-#define PLATFORM_ERRNO_MEMTEST          0x00000008		/**<  Error initializing	*/
-#define PLATFORM_ERRNO_PHY              0x00000009		/**<  Error initializing	*/
-#define PLATFORM_ERRNO_NAND             0x0000000a		/**<  Error initializing	*/
-#define PLATFORM_ERRNO_NOR              0x0000000b		/**<  Generic error in NOR              */
-#define	PLATFORM_ERRNO_UNSUPPORTED		0x0000000c		/**<  Functionality not supported */
+#define PLATFORM_ERRNO_PLL_SETUP 0x00000003 /**< Error initializing	*/
+#define PLATFORM_ERRNO_EEPROM 0x00000004 /**< Error initializing	*/
+#define PLATFORM_ERRNO_UART 0x00000005 /**< Error initializing	*/
+#define PLATFORM_ERRNO_LED 0x00000006 /**<  Error initializing	*/
+#define PLATFORM_ERRNO_I2C 0x00000007 /**<  Error initializing	*/
+#define PLATFORM_ERRNO_MEMTEST 0x00000008 /**<  Error initializing	*/
+#define PLATFORM_ERRNO_PHY 0x00000009 /**<  Error initializing	*/
+#define PLATFORM_ERRNO_NAND 0x0000000a /**<  Error initializing	*/
+#define PLATFORM_ERRNO_NOR 0x0000000b /**<  Generic error in NOR              */
+#define PLATFORM_ERRNO_UNSUPPORTED 0x0000000c /**<  Functionality not supported */
 
-#define PLATFORM_ERRNO_ECC_FAIL			0x00000010		/**<  The ECC calculation for the page read doesn't match. The application can try re-reading. */
-#define PLATFORM_ERRNO_BADFLASHDEV		0x00000011		/**<  The flash routines did no not recognize the flash manufacturer			*/
-#define	PLATFORM_ERRNO_FLASHADDR		0x00000012		/**<  The block or page number specified does not exist for the Flash			*/
-#define	PLATFORM_ERRNO_NANDBBT			0x00000013		/**<  Could not update the NAND Bad Block Table								*/
-#define PLATFORM_ERRNO_NORADDR          0x00000014		/**<  Address for NOR does not exist											*/
-#define PLATFORM_ERRNO_NOFREEBLOCKS     0x00000015		/**<  There were not enough consecutive free blocks to write the data (based on your starting block number)*/
+#define PLATFORM_ERRNO_ECC_FAIL 0x00000010 /**<  The ECC calculation for the page read doesn't match. The application can try re-reading. */
+#define PLATFORM_ERRNO_BADFLASHDEV 0x00000011 /**<  The flash routines did no not recognize the flash manufacturer			*/
+#define PLATFORM_ERRNO_FLASHADDR 0x00000012 /**<  The block or page number specified does not exist for the Flash			*/
+#define PLATFORM_ERRNO_NANDBBT 0x00000013 /**<  Could not update the NAND Bad Block Table								*/
+#define PLATFORM_ERRNO_NORADDR 0x00000014 /**<  Address for NOR does not exist											*/
+#define PLATFORM_ERRNO_NOFREEBLOCKS 0x00000015 /**<  There were not enough consecutive free blocks to write the data (based on your starting block number)*/
 
-#define PLATFORM_ERRNO_DEV_TIMEOUT		0x00000020		/**<  There was an idle timeout waiting on a device action 					*/
-#define PLATFORM_ERRNO_DEV_NAK			0x00000021		/**<  The device NAK'd the command												*/
-#define PLATFORM_ERRNO_DEV_BUSY			0x00000022		/**<  The device reported a busy state and could not complete the operation	*/
-#define PLATFORM_ERRNO_DEV_FAIL			0x00000023		/**<  Device returned a failed status											*/
-#define PLATFORM_ERRNO_PSCMOD_ENABLE	0x00000024		/**<  Unable to enable the PSC Module											*/
+#define PLATFORM_ERRNO_DEV_TIMEOUT 0x00000020 /**<  There was an idle timeout waiting on a device action 					*/
+#define PLATFORM_ERRNO_DEV_NAK 0x00000021 /**<  The device NAK'd the command												*/
+#define PLATFORM_ERRNO_DEV_BUSY 0x00000022 /**<  The device reported a busy state and could not complete the operation	*/
+#define PLATFORM_ERRNO_DEV_FAIL 0x00000023 /**<  Device returned a failed status											*/
+#define PLATFORM_ERRNO_PSCMOD_ENABLE 0x00000024 /**<  Unable to enable the PSC Module											*/
 
-#define PLATFORM_ERRNO_OOM				0x00000030		/**<  Out of memory.. tried to allocate RAM but could not.						*/
+#define PLATFORM_ERRNO_OOM 0x00000030 /**<  Out of memory.. tried to allocate RAM but could not.						*/
 
-#define PLATFORM_ERRNO_READTO			0x00000040		/**<  UART read timeout 														*/
-					
-/*@}*/  /* defgroup */
+#define PLATFORM_ERRNO_READTO 0x00000040 /**<  UART read timeout 														*/
+
+/*@}*/ /* defgroup */
 
 /** @defgroup  Platform_common  Common */
 /*@{*/
 
-/** 
- *  @brief Platform PLL init sequence return code 
+/**
+ *  @brief Platform PLL init sequence return code
  *
  *  @remark This might be deprecated in future release of platform library
  */
- 
+
 extern uint32_t platform_init_return_code;
 
-/*@}*/  /* defgroup */
+/*@}*/ /* defgroup */
 
 #endif

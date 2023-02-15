@@ -1,19 +1,19 @@
-;create interrupt vector table for C6000 DSP
-;--------------------------------------------------------------
-;This file can be modified to add Interrupt Service Routine(ISR) 
-;for an interrupt, the steps are:
-;1,reference to the externally defined ISR, for example
-;	.ref EDMA_ISR
-;2,modify the corresponding entry in the interrupt vector table.
-;  For example, if interrupt 8 is used for EDMA, then you should
-;  modify the entry number 8 like below:
-;	VEC_ENTRY EDMA_ISR     	;interrupt 8 
-;--------------------------------------------------------------
-;Author: Brighton Feng
-;Created on 2010-12-6
-;--------------------------------------------------------------
+; Create interrupt vector table for C6000 DSP
+;---------------------------------------------------------------
+; This file can be modified to add Interrupt Service Routine(ISR) 
+; for an interrupt, the steps are:
+; 1,reference to the externally defined ISR, for example
+; 	.ref EDMA_ISR
+; 2,modify the corresponding entry in the interrupt vector table.
+;   For example, if interrupt 8 is used for EDMA, then you should
+;   modify the entry number 8 like below:
+; 	VEC_ENTRY EDMA_ISR     	;interrupt 8 
+;---------------------------------------------------------------
+; Author: Brighton Feng
+; Created on 2010-12-6
+;---------------------------------------------------------------
 
-;reference to the externally defined ISR
+; reference to the externally defined ISR
 	.ref _c_int00
 	.ref GE_Message_ISR
 	.ref GE_MISC_MDIO_ISR
@@ -22,9 +22,9 @@
 	.ref exception_record
 	.global vectors 
 
-;--------------------------------------------------------------
+;---------------------------------------------------------------
 	.sect ".text"
-;create interrupt vector for NMI	
+; create interrupt vector for NMI	
 NMI_ISR:
 	STW 	B1,*-B15[1]
 
@@ -46,7 +46,7 @@ NMI_ISR:
 	LDW 	*-B15[1],B1
 	NOP 	4
 
-;--------------------------------------------------------------
+;---------------------------------------------------------------
 ;create interrupt vector for reset (interrupt 0)
 VEC_RESET .macro addr
 	MVKL  addr,B0
@@ -68,7 +68,7 @@ VEC_ENTRY .macro addr
 	.align 32
 	.endm
 
-;create interrupt vector for unused interrupts	
+; create interrupt vector for unused interrupts	
 VEC_DUMMY .macro
 unused_int?:
 	B    unused_int? ;dead loop for unused interrupts
@@ -77,8 +77,8 @@ unused_int?:
 	.endm
 
 	
-;--------------------------------------------------------------
-;interrupt vector table	
+;---------------------------------------------------------------
+; interrupt vector table	
 	.sect "vecs"
 	.align 1024
 	
@@ -101,4 +101,3 @@ vectors:
 	VEC_DUMMY   		;interrupt 15
 	
 	.end
-	

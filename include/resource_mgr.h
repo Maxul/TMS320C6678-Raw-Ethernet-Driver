@@ -42,9 +42,8 @@
  *
  *****************************************************************************/
 
-
 #ifndef _RESOURCE_MGR_H
-#define _RESOURCE_MGR_H  /* #defined if this .h file has been included */
+#define _RESOURCE_MGR_H /* #defined if this .h file has been included */
 
 /**
  * @mainpage Resource Manager
@@ -55,11 +54,10 @@
  in the MCSDK demo and example programs. See the files there called platform_osal.c and resourcemgr.c.
  */
 
-
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
 #include <stdint.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 #include "platform.h"
 
@@ -73,8 +71,8 @@
 #include <ti/csl/csl_cacheAux.h>
 
 /* CPPI LLD include */
-#include <ti/drv/cppi/cppi_drv.h>
 #include <ti/drv/cppi/cppi_desc.h>
+#include <ti/drv/cppi/cppi_drv.h>
 
 /* QMSS LLD include */
 #include <ti/drv/qmss/qmss_drv.h>
@@ -82,8 +80,8 @@
 /* PA LLD include */
 #include <ti/drv/pa/pa.h>
 
-#if ( !defined( _LITTLE_ENDIAN ) && !defined( _BIG_ENDIAN ) ) \
-||  ( defined(_LITTLE_ENDIAN ) && defined( _BIG_ENDIAN ) )
+#if (!defined(_LITTLE_ENDIAN) && !defined(_BIG_ENDIAN)) \
+    || (defined(_LITTLE_ENDIAN) && defined(_BIG_ENDIAN))
 #error either _LITTLE_ENDIAN or _BIG_ENDIAN must be defined
 #endif
 
@@ -91,22 +89,18 @@
  *  	Resource Manager Version
  */
 /*@{*/
-#define RESOURCEMGR_VERSION	"1.00.01.00"	/**< */
-/*@}*/  /* defgroup */
-
+#define RESOURCEMGR_VERSION "1.00.01.00" /**< */
+/*@}*/ /* defgroup */
 
 /** @defgroup  Platform_hardware_semaphore  Hardware Semaphores
  *  	Hardware semaphore IDs. Only those which are assigned appear here.
  */
 
-
 /*@{*/
-#define PLATFORM_CPPI_HW_SEM        1		/**< CPPI Driver - Used by OSAL layer					*/
-#define PLATFORM_QMSS_HW_SEM        2		/**< QMSS Driver - Used by OSAL Layer					*/
-#define PLATFORM_SPI_HW_SEM			3		/**< SPI BUS arbitration - Used by platform library 	*/
-/*@}*/  /* defgroup */
-
-
+#define PLATFORM_CPPI_HW_SEM 1 /**< CPPI Driver - Used by OSAL layer					*/
+#define PLATFORM_QMSS_HW_SEM 2 /**< QMSS Driver - Used by OSAL Layer					*/
+#define PLATFORM_SPI_HW_SEM 3 /**< SPI BUS arbitration - Used by platform library 	*/
+/*@}*/ /* defgroup */
 
 /** @defgroup  Platform_interrupts  Interrupts
  *  Interrupt and event IDs. Only those which are assigned appear here.
@@ -119,27 +113,24 @@
  * Ecm.eventGroupHwiNum[3] = 10;
  */
 /*@{*/
-#define PLATFORM_ETH_EVENTID		48		/**< Ethernet Switch event - Used by NIMU library */
-#define PLATFORM_ETH_INTERRUPT		7		/**< Ethernet Switch Interrupt - Used by NIMU library */
-/*@}*/  /* defgroup */
-
+#define PLATFORM_ETH_EVENTID 48 /**< Ethernet Switch event - Used by NIMU library */
+#define PLATFORM_ETH_INTERRUPT 7 /**< Ethernet Switch Interrupt - Used by NIMU library */
+/*@}*/ /* defgroup */
 
 /** @defgroup  Platform_dma  DMA
  * Assgined DMA Channels.
  */
 /*@{*/
-#define PRESOURCE_DMA_CHANNELS_GO_HERE	0
-/*@}*/  /* defgroup */
-
-
+#define PRESOURCE_DMA_CHANNELS_GO_HERE 0
+/*@}*/ /* defgroup */
 
 /**********************************************************************
  *********** Resoure Manager QMSS configuration Definitions ***********
  **********************************************************************/
 
 /** @defgroup  Qmss_Subsystem  QMSS Subsystem
-* APIs and definitions for managing the QMSS subsystem.
-*/
+ * APIs and definitions for managing the QMSS subsystem.
+ */
 /*@{*/
 
 /**
@@ -150,15 +141,13 @@ typedef enum {
     QHANDLER_QPOP_FDQ_ATTACHEDBUF
 } QHANDLER_TYPE;
 
+#define NIMU_NUM_TX_DESC 16u /**< Maximum number of TX descriptors used by NIMU */
+#define NIMU_NUM_RX_DESC 110u /**< Maximum number of RX descriptors used by NIMU */
+#define NIMU_MAX_NUM_TX_CMD_DESC 2u /**< Maximum number of TX Command descriptors used by NIMU */
 
-
-#define NIMU_NUM_TX_DESC                16u /**< Maximum number of TX descriptors used by NIMU */
-#define NIMU_NUM_RX_DESC                110u /**< Maximum number of RX descriptors used by NIMU */
-#define NIMU_MAX_NUM_TX_CMD_DESC        2u  /**< Maximum number of TX Command descriptors used by NIMU */
-
-#define MAX_NUM_NIMU_DESC   (NIMU_NUM_TX_DESC + NIMU_NUM_RX_DESC + NIMU_MAX_NUM_TX_CMD_DESC) /**< Maximum number of descriptors used by NIMU */
-#define MAX_NUM_DESC        (MAX_NUM_NIMU_DESC)   /**< Maximum number of descriptors used by all the modules */
-#define	MAX_DESC_SIZE       128 /**< Maximum size of descriptor in bytes */
+#define MAX_NUM_NIMU_DESC (NIMU_NUM_TX_DESC + NIMU_NUM_RX_DESC + NIMU_MAX_NUM_TX_CMD_DESC) /**< Maximum number of descriptors used by NIMU */
+#define MAX_NUM_DESC (MAX_NUM_NIMU_DESC) /**< Maximum number of descriptors used by all the modules */
+#define MAX_DESC_SIZE 128 /**< Maximum size of descriptor in bytes */
 
 /**
  * @brief
@@ -167,30 +156,28 @@ typedef enum {
  * @details
  *  This structure defines the QMSS configuration during the system initialization
  */
-typedef struct QMSS_CFG_Tag
-{
+typedef struct QMSS_CFG_Tag {
     /**
      * @brief       Master core flag, 1: Master core; 0: non-master core.
      */
-    uint32_t        master_core;
+    uint32_t master_core;
 
     /**
      * @brief       Maximum number of descriptors.
      */
-    uint32_t        max_num_desc;
+    uint32_t max_num_desc;
 
     /**
      * @brief       Size of descriptor in bytes.
      */
-    uint32_t        desc_size;
+    uint32_t desc_size;
 
     /**
      * @brief       Memory Region corresponding to the descriptor.
      */
-    Qmss_MemRegion  mem_region;
+    Qmss_MemRegion mem_region;
 
 } QMSS_CFG_T;
-
 
 /**
  *   @n@b res_mgr_qmss_freeq
@@ -204,13 +191,10 @@ typedef struct QMSS_CFG_Tag
  *
  */
 Qmss_QueueHnd
-res_mgr_qmss_get_freeq
-(
-    void
-);
+res_mgr_qmss_get_freeq(
+    void);
 
-
- /**
+/**
  *   @n@b QMSS_QPOP
  *
  *   @b Description
@@ -227,12 +211,10 @@ res_mgr_qmss_get_freeq
  *
  */
 int32_t
-QMSS_QPOP
-(
-    Qmss_QueueHnd           handler,
-    QHANDLER_TYPE           type,
-    Cppi_HostDesc**         pHostDescriptor
-);
+QMSS_QPOP(
+    Qmss_QueueHnd handler,
+    QHANDLER_TYPE type,
+    Cppi_HostDesc** pHostDescriptor);
 
 /**
  *   @n@b QMSS_QPUSH
@@ -253,15 +235,12 @@ QMSS_QPOP
  *   @return
  *
  */
-void
-QMSS_QPUSH
-(
-    Qmss_QueueHnd          handler,
-    void                   *descAddr,
-    uint32_t               packetSize,
-    uint32_t               descSize,
-    Qmss_Location          location
-);
+void QMSS_QPUSH(
+    Qmss_QueueHnd handler,
+    void* descAddr,
+    uint32_t packetSize,
+    uint32_t descSize,
+    Qmss_Location location);
 
 /**
  *   @n@b QMSS_QPUSHDESCSIZE
@@ -278,13 +257,10 @@ QMSS_QPUSH
  *   @return
  *
  */
-void
-QMSS_QPUSHDESCSIZE
-(
-    Qmss_QueueHnd          handler,
-    void                   *descAddr,
-    uint32_t               descSize
-);
+void QMSS_QPUSHDESCSIZE(
+    Qmss_QueueHnd handler,
+    void* descAddr,
+    uint32_t descSize);
 
 /**
  *   @n@b res_mgr_init_qmss
@@ -300,10 +276,8 @@ QMSS_QPUSHDESCSIZE
  *
  */
 int32_t
-res_mgr_init_qmss
-(
-    QMSS_CFG_T      *p_qmss_cfg
-);
+res_mgr_init_qmss(
+    QMSS_CFG_T* p_qmss_cfg);
 
 /**
  *   @n@b res_mgr_stop_qmss
@@ -317,11 +291,8 @@ res_mgr_init_qmss
  *
  */
 int32_t
-res_mgr_stop_qmss
-(
-    void
-);
-
+res_mgr_stop_qmss(
+    void);
 
 /**
  *  @n@b Osal_qmssCsEnter
@@ -341,8 +312,7 @@ res_mgr_stop_qmss
  *      Handle used to lock critical section
  *
  */
-Ptr Osal_qmssCsEnter (void);
-
+Ptr Osal_qmssCsEnter(void);
 
 /**
  *
@@ -361,8 +331,7 @@ Ptr Osal_qmssCsEnter (void);
  *  @n None
  *
  */
-void Osal_qmssCsExit (Ptr CsHandle);
-
+void Osal_qmssCsExit(Ptr CsHandle);
 
 /**
  *
@@ -379,8 +348,7 @@ void Osal_qmssCsExit (Ptr CsHandle);
  *       Handle used to lock critical section
  *
  */
-Ptr Osal_qmssMtCsEnter (void);
-
+Ptr Osal_qmssMtCsEnter(void);
 
 /**
  *
@@ -398,8 +366,7 @@ Ptr Osal_qmssMtCsEnter (void);
  *  @return None
  *
  */
-void Osal_qmssMtCsExit (Ptr CsHandle);
-
+void Osal_qmssMtCsExit(Ptr CsHandle);
 
 /**
  *
@@ -416,8 +383,7 @@ void Osal_qmssMtCsExit (Ptr CsHandle);
  *      Allocated block address
  *
  */
-Ptr Osal_qmssMalloc (uint32_t num_bytes);
-
+Ptr Osal_qmssMalloc(uint32_t num_bytes);
 
 /**
  *
@@ -438,8 +404,7 @@ Ptr Osal_qmssMalloc (uint32_t num_bytes);
  *  @return  None
  *
  */
-void Osal_qmssFree (Ptr dataPtr, uint32_t num_bytes);
-
+void Osal_qmssFree(Ptr dataPtr, uint32_t num_bytes);
 
 /**
  *  @b Description
@@ -457,8 +422,7 @@ void Osal_qmssFree (Ptr dataPtr, uint32_t num_bytes);
 
  *  @retval None
  */
-void Osal_qmssBeginMemAccess (void *blockPtr, uint32_t size);
-
+void Osal_qmssBeginMemAccess(void* blockPtr, uint32_t size);
 
 /**
  *  @b Description
@@ -476,46 +440,44 @@ void Osal_qmssBeginMemAccess (void *blockPtr, uint32_t size);
 
  *  @retval None
  */
-void Osal_qmssEndMemAccess (void *blockPtr, uint32_t size);
+void Osal_qmssEndMemAccess(void* blockPtr, uint32_t size);
 
-
-/*@}*/  /* defgroup */
-
+/*@}*/ /* defgroup */
 
 /**********************************************************************
  *********** Resoure Manager PA configuration Definitions ***********
  **********************************************************************/
 
 /** @defgroup  PA_Subsystem  Packet Accelerator (PA) Subsystem
-* APIs and definitions for managing the Packet Accelerator (PA) subsystem.
-*/
+ * APIs and definitions for managing the Packet Accelerator (PA) subsystem.
+ */
 
 /*@{*/
 
 /**
  *  @brief Number of PA Tx queues available
  */
-#define         NUM_PA_TX_QUEUES            9
+#define NUM_PA_TX_QUEUES 9
 
 /**
  *  @brief Number of PA Rx queues available
  */
-#define         NUM_PA_RX_CHANNELS          24
+#define NUM_PA_RX_CHANNELS 24
 
 /**
  *  @brief Maximum number of L2 handles
  */
-#define     MAX_NUM_L2_HANDLES          10
+#define MAX_NUM_L2_HANDLES 10
 
 /**
  *  @brief Maximum number of L3 handles
  */
-#define     MAX_NUM_L3_HANDLES          20
+#define MAX_NUM_L3_HANDLES 20
 
 /**
  *  @brief Maximum number of L4 handles
  */
-#define     MAX_NUM_L4_HANDLES          40
+#define MAX_NUM_L4_HANDLES 40
 
 /*
  *   @n@b res_mgr_init_pass
@@ -530,10 +492,8 @@ void Osal_qmssEndMemAccess (void *blockPtr, uint32_t size);
  *
  */
 int32_t
-res_mgr_init_pass
-(
-    void
-);
+res_mgr_init_pass(
+    void);
 
 /**
  *   @n@b res_mgr_cppi_get_passhandle
@@ -546,7 +506,7 @@ res_mgr_init_pass
  *
  */
 Cppi_Handle
-res_mgr_cppi_get_passhandle (void);
+res_mgr_cppi_get_passhandle(void);
 
 /**
  *   @n@b res_mgr_get_painstance
@@ -559,7 +519,7 @@ res_mgr_cppi_get_passhandle (void);
  *
  */
 Pa_Handle
-res_mgr_get_painstance (void);
+res_mgr_get_painstance(void);
 
 /**
  *  @b Description
@@ -577,8 +537,7 @@ res_mgr_get_painstance (void);
 
  *  @retval  None
  */
-void Osal_paBeginMemAccess (Ptr addr, uint32_t size);
-
+void Osal_paBeginMemAccess(Ptr addr, uint32_t size);
 
 /**
  *  @b Description
@@ -596,33 +555,31 @@ void Osal_paBeginMemAccess (Ptr addr, uint32_t size);
 
  *  @retval  None
  */
-void Osal_paEndMemAccess (Ptr addr, uint32_t size);
+void Osal_paEndMemAccess(Ptr addr, uint32_t size);
 
-/*@}*/  /* defgroup */
-
+/*@}*/ /* defgroup */
 
 /**********************************************************************
  *********** Resoure Manager CPPI configuration Definitions ***********
  **********************************************************************/
 
 /** @defgroup  Cppi_Subsystem CPPI Subsystem
-* APIs and definitions for managing the CPPI subsystem.
-*/
+ * APIs and definitions for managing the CPPI subsystem.
+ */
 /*@{*/
-
 
 /**
  *  @brief CPPI configuration type.
  */
 typedef enum {
-    CPPI_CFG_PASS   = 0,
+    CPPI_CFG_PASS = 0,
     CPPI_CFG_SRIO
 } CPPI_CFG_TYPE;
 
 /**
  *  @brief Maximum number of CPPI configuration
  */
-#define         MAX_CPPI_CFG                2
+#define MAX_CPPI_CFG 2
 
 /**
  * @brief
@@ -631,27 +588,26 @@ typedef enum {
  * @details
  *  This structure defines the CPPI configuration during the system initialization
  */
-typedef struct CPPI_CFG_Tag
-{
+typedef struct CPPI_CFG_Tag {
     /**
      * @brief       Master core flag, 1: Master core; 0: non-master core.
      */
-    uint32_t        master_core;
+    uint32_t master_core;
 
     /**
      * @brief       CPPI DMA number.
      */
-    Cppi_CpDma      dma_num;
+    Cppi_CpDma dma_num;
 
     /**
      * @brief       Maximum number of TX queues.
      */
-    uint32_t        num_tx_queues;
+    uint32_t num_tx_queues;
 
     /**
      * @brief       Maximum number of RX channels.
      */
-    uint32_t        num_rx_channels;
+    uint32_t num_rx_channels;
 } CPPI_CFG_T;
 
 /**
@@ -669,10 +625,8 @@ typedef struct CPPI_CFG_Tag
  *
  */
 int32_t
-res_mgr_init_cppi
-(
-    CPPI_CFG_T      *p_cppi_cfg
-);
+res_mgr_init_cppi(
+    CPPI_CFG_T* p_cppi_cfg);
 
 /**
  *   @n@b res_mgr_stop_cppi
@@ -688,11 +642,8 @@ res_mgr_init_cppi
  *
  */
 int32_t
-res_mgr_stop_cppi
-(
-    CPPI_CFG_TYPE       cfg_type
-);
-
+res_mgr_stop_cppi(
+    CPPI_CFG_TYPE cfg_type);
 
 /**
  *
@@ -713,8 +664,7 @@ res_mgr_stop_cppi
  *  @n  Handle used to lock critical section
  *
  */
-Ptr Osal_cppiCsEnter (void);
-
+Ptr Osal_cppiCsEnter(void);
 
 /**
  *
@@ -732,9 +682,7 @@ Ptr Osal_cppiCsEnter (void);
  *  @return  None
  *
  */
-void Osal_cppiCsExit (Ptr CsHandle);
-
-
+void Osal_cppiCsExit(Ptr CsHandle);
 
 /**
  *
@@ -754,8 +702,7 @@ void Osal_cppiCsExit (Ptr CsHandle);
  *      Allocated block address
  *
  */
-Ptr Osal_cppiMalloc (uint32_t num_bytes);
-
+Ptr Osal_cppiMalloc(uint32_t num_bytes);
 
 /**
  *
@@ -776,8 +723,7 @@ Ptr Osal_cppiMalloc (uint32_t num_bytes);
  *  @return  None
  *
  */
-void Osal_cppiFree (Ptr dataPtr, uint32_t num_bytes);
-
+void Osal_cppiFree(Ptr dataPtr, uint32_t num_bytes);
 
 /**
  *  @b Description
@@ -795,8 +741,7 @@ void Osal_cppiFree (Ptr dataPtr, uint32_t num_bytes);
 
  *  @retval  None
  */
-void Osal_cppiBeginMemAccess (void *blockPtr, uint32_t size);
-
+void Osal_cppiBeginMemAccess(void* blockPtr, uint32_t size);
 
 /**
  *  @b Description
@@ -814,11 +759,8 @@ void Osal_cppiBeginMemAccess (void *blockPtr, uint32_t size);
 
  *  @retval  None
  */
-void Osal_cppiEndMemAccess (void *blockPtr, uint32_t size);
+void Osal_cppiEndMemAccess(void* blockPtr, uint32_t size);
 
-
-/*@}*/  /* defgroup */
-
-
+/*@}*/ /* defgroup */
 
 #endif /* _RESOURCE_MGR_H */

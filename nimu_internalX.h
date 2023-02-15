@@ -49,15 +49,15 @@
 
 #include <ti/csl/csl_pscAux.h>
 #include <ti/csl/csl_tmr.h>
-#include <ti/csl/cslr_chip.h>
 #include <ti/csl/cslr_cgem.h>
-#include <ti/csl/cslr_xmc.h>
+#include <ti/csl/cslr_chip.h>
 #include <ti/csl/cslr_cpsgmii.h>
+#include <ti/csl/cslr_xmc.h>
 
 /* CSL EMAC include */
-#include <ti/csl/csl_cpsw.h>
 #include <ti/csl/csl_cpsgmii.h>
 #include <ti/csl/csl_cpsgmiiAux.h>
+#include <ti/csl/csl_cpsw.h>
 #include <ti/csl/csl_mdio.h>
 #include <ti/csl/csl_mdioAux.h>
 
@@ -73,12 +73,12 @@
 #include <ti/csl/csl_cacheAux.h>
 
 /* CPPI LLD include */
-#include <ti/drv/cppi/cppi_drv.h>
 #include <ti/drv/cppi/cppi_desc.h>
+#include <ti/drv/cppi/cppi_drv.h>
 
 /* NetCP includes */
-#include <ti/drv/qmss/qmss_drv.h>
 #include <ti/drv/pa/pa.h>
+#include <ti/drv/qmss/qmss_drv.h>
 
 /* Resource manager for QMSS, PA, CPPI */
 #include "ti/platform/resource_mgr.h"
@@ -90,40 +90,40 @@
 
 #include "c6678_emac_types.h"
 
-Ptr Osal_nimuMalloc (uint32_t num_bytes, uint32_t alignment);
-void Osal_nimuFree (Ptr dataPtr, uint32_t num_bytes);
+Ptr Osal_nimuMalloc(uint32_t num_bytes, uint32_t alignment);
+void Osal_nimuFree(Ptr dataPtr, uint32_t num_bytes);
 
 #define NETDBG 1
 
 /* Number of cores on c6678 */
-#define     NUM_CORES           8
+#define NUM_CORES 8
 
-extern NETIF_DEVICE *GLOBAL_PTR_NET_DEVICE;
+extern NETIF_DEVICE* GLOBAL_PTR_NET_DEVICE;
 
-extern      int32_t       Init_Qmss(void);
-extern      int32_t       Init_PASS(void);
-extern      int32_t       Init_Cpsw(uint32_t mtu, uint8_t * srcmacaddress);
-extern      int32_t       Init_Cppi(void);
+extern int32_t Init_Qmss(void);
+extern int32_t Init_PASS(void);
+extern int32_t Init_Cpsw(uint32_t mtu, uint8_t* srcmacaddress);
+extern int32_t Init_Cppi(void);
 
-extern      int32_t       Verify_Init (void);
-extern      void        Init_MDIO(void);
-extern      void        Init_SGMII (uint32_t macPortNum);
-extern      void        Init_Switch (uint32_t mtu);
-extern      int32_t       Switch_update_addr (uint32_t portNum, uint8_t macAddress[6], uint16_t add);
-extern      void        Init_MAC(uint32_t, uint8_t *, uint32_t);
+extern int32_t Verify_Init(void);
+extern void Init_MDIO(void);
+extern void Init_SGMII(uint32_t macPortNum);
+extern void Init_Switch(uint32_t mtu);
+extern int32_t Switch_update_addr(uint32_t portNum, uint8_t macAddress[6], uint16_t add);
+extern void Init_MAC(uint32_t, uint8_t*, uint32_t);
 
-extern      int32_t       Setup_Tx(void);
-extern      int32_t       Setup_Rx (void);
-extern      int32_t       Setup_PASS(void);
+extern int32_t Setup_Tx(void);
+extern int32_t Setup_Rx(void);
+extern int32_t Setup_PASS(void);
 
-extern      int32_t       Add_MACAddress(paEthInfo_t *ethInfo, paRouteInfo_t *routeInfo);
-extern      uint32_t      Convert_CoreLocal2GlobalAddr (uint32_t  addr);
-extern      void        CycleDelay (int32_t count);
+extern int32_t Add_MACAddress(paEthInfo_t* ethInfo, paRouteInfo_t* routeInfo);
+extern uint32_t Convert_CoreLocal2GlobalAddr(uint32_t addr);
+extern void CycleDelay(int32_t count);
 
-extern      int32_t       Cpsw_SwitchOpen (void);
-extern      int32_t       Mdio_Open (void);
-extern      int32_t       Sgmii_Open (void);
-extern      int32_t       Download_PAFirmware (void);
+extern int32_t Cpsw_SwitchOpen(void);
+extern int32_t Mdio_Open(void);
+extern int32_t Sgmii_Open(void);
+extern int32_t Download_PAFirmware(void);
 
 /**
  *  @brief  Nimu_CppiDescCfg
@@ -132,16 +132,15 @@ extern      int32_t       Download_PAFirmware (void);
  *          for a NIMU free queue used to hold pre-allocated
  *          buffers.
  */
-typedef struct  _Nimu_CppiDescCfg
-{
+typedef struct _Nimu_CppiDescCfg {
     /** CPPI Memory region to be used for this set of free descriptors. */
-    uint32_t                    descMemRegion;
+    uint32_t descMemRegion;
 
     /** Number of CPPI free descriptors to allocate */
-    uint32_t                    numDesc;
+    uint32_t numDesc;
 
     /** Size of CPPI free descriptors to allocate */
-    uint32_t                    descSize;
+    uint32_t descSize;
 
     /** CPPI Descriptor Type.
      *
@@ -149,7 +148,7 @@ typedef struct  _Nimu_CppiDescCfg
      *      Cppi_DescType_HOST,
      *      Cppi_DescType_MONOLITHIC
      */
-    Cppi_DescType               descType;
+    Cppi_DescType descType;
 } Nimu_CppiDescCfg;
 
 #endif /* _NIMU_ETH_H_ */

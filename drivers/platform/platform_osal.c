@@ -7,10 +7,10 @@
  *
  */
 
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
 #include <stdint.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 /* Platform utilities include */
 #include "ti/platform/platform.h"
@@ -31,17 +31,17 @@
 #include <ti/csl/csl_cacheAux.h>
 #if 0
 /* XDC/BIOS includes */
-#include <xdc/std.h>
-#include <xdc/runtime/IHeap.h>
-#include <xdc/runtime/System.h>
-#include <xdc/runtime/Memory.h>
 #include <xdc/runtime/Error.h>
+#include <xdc/runtime/IHeap.h>
+#include <xdc/runtime/Memory.h>
+#include <xdc/runtime/System.h>
+#include <xdc/std.h>
 
 #include <ti/sysbios/BIOS.h>
-#include <ti/sysbios/knl/Task.h>
-#include <ti/sysbios/knl/Semaphore.h>
 #include <ti/sysbios/heaps/HeapBuf.h>
 #include <ti/sysbios/heaps/HeapMem.h>
+#include <ti/sysbios/knl/Semaphore.h>
+#include <ti/sysbios/knl/Task.h>
 #endif
 /**********************************************************************
  *********************** Platform Library OSAL Functions **************
@@ -60,10 +60,10 @@
  *      Allocated block address
  * =============================================================================
  */
-uint8_t *Osal_platformMalloc (uint32_t num_bytes, uint32_t alignment)
+uint8_t* Osal_platformMalloc(uint32_t num_bytes, uint32_t alignment)
 {
-	/* Allocate memory.  */
-	return malloc(num_bytes);
+    /* Allocate memory.  */
+    return malloc(num_bytes);
 }
 
 /**
@@ -85,12 +85,11 @@ uint8_t *Osal_platformMalloc (uint32_t num_bytes, uint32_t alignment)
  *      Not Applicable
  * =============================================================================
  */
-void Osal_platformFree (uint8_t *dataPtr, uint32_t num_bytes)
+void Osal_platformFree(uint8_t* dataPtr, uint32_t num_bytes)
 {
 
     /* Free up the memory */
-    if (dataPtr)
-    {
+    if (dataPtr) {
         free(dataPtr);
     }
 }
@@ -119,7 +118,8 @@ void Osal_platformSpiCsEnter(void)
      *
      * Acquire Multi core CPPI synchronization lock
      */
-    while ((CSL_semAcquireDirect (PLATFORM_SPI_HW_SEM)) == 0);
+    while ((CSL_semAcquireDirect(PLATFORM_SPI_HW_SEM)) == 0)
+        ;
 
     return;
 }
@@ -133,22 +133,21 @@ void Osal_platformSpiCsEnter(void)
  *      acquired critical section lock using @a Osal_platformSpiCsEnter ()
  *      API. It resets the multi-core and multi-threaded lock,
  *      enabling another process/core to grab the SPI bus.
- *     
+ *
  *
  *  @return     None
  * =============================================================================
  */
-void Osal_platformSpiCsExit (void)
+void Osal_platformSpiCsExit(void)
 {
     /* Release the hardware semaphore
      *
      * Release multi-core lock.
      */
-    CSL_semReleaseSemaphore (PLATFORM_SPI_HW_SEM);
+    CSL_semReleaseSemaphore(PLATFORM_SPI_HW_SEM);
 
     return;
 }
-
 
 /**********************************************************************
  *********************** NIMU OSAL Functions **************************
@@ -170,10 +169,10 @@ void Osal_platformSpiCsExit (void)
  *      Allocated block address
  * =============================================================================
  */
-Ptr Osal_nimuMalloc (uint32_t num_bytes, uint32_t alignment)
+Ptr Osal_nimuMalloc(uint32_t num_bytes, uint32_t alignment)
 {
-	/* Allocate memory.  */
-	return malloc(num_bytes);
+    /* Allocate memory.  */
+    return malloc(num_bytes);
 }
 
 /**
@@ -196,11 +195,10 @@ Ptr Osal_nimuMalloc (uint32_t num_bytes, uint32_t alignment)
  *      Not Applicable
  * =============================================================================
  */
-void Osal_nimuFree (Ptr dataPtr, uint32_t num_bytes)
+void Osal_nimuFree(Ptr dataPtr, uint32_t num_bytes)
 {
     /* Free up the memory */
-    if (dataPtr)
-    {
+    if (dataPtr) {
         free(dataPtr);
     }
 }
@@ -230,13 +228,14 @@ void Osal_nimuFree (Ptr dataPtr, uint32_t num_bytes)
  *  @n  Handle used to lock critical section
  * =============================================================================
  */
-Ptr Osal_cppiCsEnter (void)
+Ptr Osal_cppiCsEnter(void)
 {
     /* Get the hardware semaphore.
      *
      * Acquire Multi core CPPI synchronization lock
      */
-    while ((CSL_semAcquireDirect (PLATFORM_CPPI_HW_SEM)) == 0);
+    while ((CSL_semAcquireDirect(PLATFORM_CPPI_HW_SEM)) == 0)
+        ;
 
     return NULL;
 }
@@ -257,17 +256,16 @@ Ptr Osal_cppiCsEnter (void)
  *  @return     None
  * =============================================================================
  */
-void Osal_cppiCsExit (Ptr CsHandle)
+void Osal_cppiCsExit(Ptr CsHandle)
 {
     /* Release the hardware semaphore
      *
      * Release multi-core lock.
      */
-    CSL_semReleaseSemaphore (PLATFORM_CPPI_HW_SEM);
+    CSL_semReleaseSemaphore(PLATFORM_CPPI_HW_SEM);
 
     return;
 }
-
 
 /**
  * ============================================================================
@@ -287,10 +285,10 @@ void Osal_cppiCsExit (Ptr CsHandle)
  *      Allocated block address
  * =============================================================================
  */
-Ptr Osal_cppiMalloc (uint32_t num_bytes)
+Ptr Osal_cppiMalloc(uint32_t num_bytes)
 {
-	/* Allocate memory.  */
-	return malloc(num_bytes);
+    /* Allocate memory.  */
+    return malloc(num_bytes);
 }
 
 /**
@@ -313,11 +311,10 @@ Ptr Osal_cppiMalloc (uint32_t num_bytes)
  *      Not Applicable
  * =============================================================================
  */
-void Osal_cppiFree (Ptr dataPtr, uint32_t num_bytes)
+void Osal_cppiFree(Ptr dataPtr, uint32_t num_bytes)
 {
     /* Free up the memory */
-    if (dataPtr)
-    {
+    if (dataPtr) {
         free(dataPtr);
     }
 }
@@ -339,7 +336,7 @@ void Osal_cppiFree (Ptr dataPtr, uint32_t num_bytes)
  *  @retval
  *      Not Applicable
  */
-void Osal_cppiBeginMemAccess (void *blockPtr, uint32_t size)
+void Osal_cppiBeginMemAccess(void* blockPtr, uint32_t size)
 {
     /* Cache coherence protection is only required for multi-core application */
     return;
@@ -362,7 +359,7 @@ void Osal_cppiBeginMemAccess (void *blockPtr, uint32_t size)
  *  @retval
  *      Not Applicable
  */
-void Osal_cppiEndMemAccess (void *blockPtr, uint32_t size)
+void Osal_cppiEndMemAccess(void* blockPtr, uint32_t size)
 {
     /* Cache coherence protection is only required for multi-core application */
     return;
@@ -392,13 +389,14 @@ void Osal_cppiEndMemAccess (void *blockPtr, uint32_t size)
  *      Handle used to lock critical section
  * =============================================================================
  */
-Ptr Osal_qmssCsEnter (void)
+Ptr Osal_qmssCsEnter(void)
 {
     /* Get the hardware semaphore.
      *
      * Acquire Multi core QMSS synchronization lock
      */
-    while ((CSL_semAcquireDirect (PLATFORM_QMSS_HW_SEM)) == 0);
+    while ((CSL_semAcquireDirect(PLATFORM_QMSS_HW_SEM)) == 0)
+        ;
 
     return NULL;
 }
@@ -419,13 +417,13 @@ Ptr Osal_qmssCsEnter (void)
  *  @return     None
  * =============================================================================
  */
-void Osal_qmssCsExit (Ptr CsHandle)
+void Osal_qmssCsExit(Ptr CsHandle)
 {
     /* Release the hardware semaphore
      *
      * Release multi-core lock.
      */
-    CSL_semReleaseSemaphore (PLATFORM_QMSS_HW_SEM);
+    CSL_semReleaseSemaphore(PLATFORM_QMSS_HW_SEM);
 
     return;
 }
@@ -446,7 +444,7 @@ void Osal_qmssCsExit (Ptr CsHandle)
  *       Handle used to lock critical section
  * =============================================================================
  */
-Ptr Osal_qmssMtCsEnter (void)
+Ptr Osal_qmssMtCsEnter(void)
 {
     /*
      * Current demos are not multi-threaded.
@@ -470,7 +468,7 @@ Ptr Osal_qmssMtCsEnter (void)
  *  @return     None
  * =============================================================================
  */
-void Osal_qmssMtCsExit (Ptr CsHandle)
+void Osal_qmssMtCsExit(Ptr CsHandle)
 {
     /*
      * Release multi-threaded / multi-process lock on this core.
@@ -493,10 +491,10 @@ void Osal_qmssMtCsExit (Ptr CsHandle)
  *      Allocated block address
  * =============================================================================
  */
-Ptr Osal_qmssMalloc (uint32_t num_bytes)
+Ptr Osal_qmssMalloc(uint32_t num_bytes)
 {
-	/* Allocate memory.  */
-	return malloc(num_bytes);
+    /* Allocate memory.  */
+    return malloc(num_bytes);
 }
 
 /**
@@ -519,11 +517,10 @@ Ptr Osal_qmssMalloc (uint32_t num_bytes)
  *      Not Applicable
  * =============================================================================
  */
-void Osal_qmssFree (Ptr dataPtr, uint32_t num_bytes)
+void Osal_qmssFree(Ptr dataPtr, uint32_t num_bytes)
 {
     /* Free up the memory */
-    if (dataPtr)
-    {
+    if (dataPtr) {
         free(dataPtr);
     }
 }
@@ -545,7 +542,7 @@ void Osal_qmssFree (Ptr dataPtr, uint32_t num_bytes)
  *  @retval
  *      Not Applicable
  */
-void Osal_qmssBeginMemAccess (void *blockPtr, uint32_t size)
+void Osal_qmssBeginMemAccess(void* blockPtr, uint32_t size)
 {
 
     /* Cache coherence protection is only required for multi-core application */
@@ -569,7 +566,7 @@ void Osal_qmssBeginMemAccess (void *blockPtr, uint32_t size)
  *  @retval
  *      Not Applicable
  */
-void Osal_qmssEndMemAccess (void *blockPtr, uint32_t size)
+void Osal_qmssEndMemAccess(void* blockPtr, uint32_t size)
 {
 
     /* Cache coherence protection is only required for multi-core application */
@@ -596,10 +593,10 @@ void Osal_qmssEndMemAccess (void *blockPtr, uint32_t size)
  *  @retval
  *      Not Applicable
  */
-void Osal_paBeginMemAccess (Ptr addr, uint32_t size)
+void Osal_paBeginMemAccess(Ptr addr, uint32_t size)
 {
-	/* Cache coherence protection is only required for multi-core application */
-	return;
+    /* Cache coherence protection is only required for multi-core application */
+    return;
 }
 
 /**
@@ -619,18 +616,17 @@ void Osal_paBeginMemAccess (Ptr addr, uint32_t size)
  *  @retval
  *      Not Applicable
  */
-void Osal_paEndMemAccess (Ptr addr, uint32_t size)
+void Osal_paEndMemAccess(Ptr addr, uint32_t size)
 {
-	/* Cache coherence protection is only required for multi-core application */
-	return;
+    /* Cache coherence protection is only required for multi-core application */
+    return;
 }
 
 /* OSAL Functions for the PA LLDs */
-void Osal_paMtCsEnter (uint32_t *key)
+void Osal_paMtCsEnter(uint32_t* key)
 {
 }
 
-void Osal_paMtCsExit (uint32_t key)
+void Osal_paMtCsExit(uint32_t key)
 {
 }
-
